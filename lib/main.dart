@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:native_chat_app/views/components/main_navigate_bar.dart';
+import 'package:native_chat_app/views/pages/home/home_page.dart';
 
 void main() {
   runApp(const MainApp());
@@ -11,27 +12,26 @@ class MainApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         backgroundColor: Colors.transparent,
         body: Container(
           decoration: const BoxDecoration(
-            gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(255, 93, 65, 87),
-                Color.fromARGB(255, 168, 202, 186)
-              ],
-              begin: FractionalOffset(0.0, 0.0),
-              end: FractionalOffset(1.0, 0.0),
-              stops: [0.0, 1.0],
-              tileMode: TileMode.clamp
+            image: DecorationImage(
+              image: AssetImage("images/bg.gif"),
+              fit: BoxFit.cover
             )
           ),
           child: Column(
-            children: const [
+            children: [
               Expanded(
-                child: Text("abc"),
+                child: Column(
+                  children: const [
+                    HomePage()
+                  ],
+                )
               ),
-              MainNavigateBar()
+              const MainNavigateBar()
             ],
           )
         )

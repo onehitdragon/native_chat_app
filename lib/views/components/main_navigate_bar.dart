@@ -34,7 +34,7 @@ class _MainNavigateState extends State<MainNavigateBar>{
   Widget build(BuildContext context) {
     return Container(
       decoration: const BoxDecoration(
-        color: Colors.white,
+        color: Color.fromARGB(80, 255, 255, 255),
         borderRadius: BorderRadius.only(topLeft: Radius.circular(20), topRight: Radius.circular(20))
       ),
       child: NavigationBar(
@@ -68,7 +68,7 @@ class ButtonNavigate extends StatelessWidget{
         margin: const EdgeInsets.all(12),
         padding: const EdgeInsets.only(top: 2, bottom: 2),
         decoration: BoxDecoration(
-          color: _isHover ? Colors.black : Colors.white,
+          color: _isHover ? Colors.black : Colors.transparent,
           borderRadius: const BorderRadius.all(Radius.circular(10))
         ),
         child: Column(
