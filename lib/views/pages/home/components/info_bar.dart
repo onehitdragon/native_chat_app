@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:native_chat_app/views/pages/home/components/avatar.dart';
 
 class InfoBar extends StatelessWidget{
   const InfoBar({super.key});
@@ -7,13 +8,7 @@ class InfoBar extends StatelessWidget{
   Widget build(BuildContext context) {
     return Row(
       children: [
-        // avatar
-        Container(
-          padding: const EdgeInsets.all(10),
-          width: 70,
-          height: 70,
-          child: Image.asset("images/avatar.png")
-        ),
+        const Avatar(),
         // info
         Expanded(
           child: Column(
@@ -25,7 +20,7 @@ class InfoBar extends StatelessWidget{
                 child: const Text(
                   "Nguyen Van A",
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 17,
                     fontWeight: FontWeight.bold,
                     color: Colors.white
                   )
