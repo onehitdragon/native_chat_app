@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:native_chat_app/views/pages/components/link_button.dart';
-import 'package:native_chat_app/views/pages/login/components/login_form.dart';
+import 'package:native_chat_app/views/pages/register/components/register_form.dart';
 
-class LoginPage extends StatelessWidget{
-  const LoginPage({super.key});
+class RegisterPage extends StatelessWidget{
+  const RegisterPage({super.key});
   
   @override
   Widget build(BuildContext context) {
@@ -21,9 +21,9 @@ class LoginPage extends StatelessWidget{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: const [
-              LoginForm(),
+              RegisterForm(),
               LinkButton(
-                "I don't have an account"
+                "I have account already"
               )
             ]
           ),

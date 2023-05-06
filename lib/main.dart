@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:native_chat_app/views/pages/login/login_page.dart';
-// import 'package:native_chat_app/views/pages/home/home_page.dart';
+//import 'package:native_chat_app/views/pages/register/register_page.dart';
+//import 'package:native_chat_app/views/pages/home/home_page.dart';
 //import 'package:native_chat_app/views/pages/chat/chat_page.dart';
 
 void main() {
