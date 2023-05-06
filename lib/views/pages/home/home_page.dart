@@ -22,14 +22,10 @@ class HomePage extends StatelessWidget{
           children: [
             Expanded(
               child: Column(
-                children: [
-                  Column(
-                    children: const [
-                      InfoBar(),
-                      ChatArea()
-                    ],
-                  )
-                ],
+                children: const [
+                  InfoBar(),
+                  ChatArea()
+                ]
               )
             ),
             const MainNavigateBar()
