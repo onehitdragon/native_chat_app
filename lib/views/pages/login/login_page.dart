@@ -1,13 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:native_chat_app/state/auth_state.dart';
 import 'package:native_chat_app/views/pages/components/link_button.dart';
 import 'package:native_chat_app/views/pages/login/components/login_form.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatelessWidget{
   const LoginPage({super.key});
   
   @override
   Widget build(BuildContext context) {
+    AuthState authState = Provider.of<AuthState>(context);
+    Future.delayed(Duration.zero, () {
+      if(authState.user != null){
+        context.go("/");
+      }
+    });
+
     return Scaffold(
       backgroundColor: Colors.transparent,
       body: Container(
@@ -27,7 +36,7 @@ class LoginPage extends StatelessWidget{
                 "I don't have an account",
                 onPressed: () {
                   context.go("/register");
-                },
+                }
               )
             ]
           ),
