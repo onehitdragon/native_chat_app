@@ -34,4 +34,8 @@ class User{
       updatedAt: DateTime.parse(json["updatedAt"])
     );
   }
+
+  String getFullName(){
+    return "$lastName $firstName";
+  }
 }

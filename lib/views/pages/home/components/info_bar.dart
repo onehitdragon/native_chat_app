@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:native_chat_app/models/user_model.dart';
+import 'package:native_chat_app/state/auth_state.dart';
 import 'package:native_chat_app/views/pages/home/components/avatar.dart';
+import 'package:provider/provider.dart';
 
 class InfoBar extends StatelessWidget{
   const InfoBar({super.key});
   
   @override
   Widget build(BuildContext context) {
+    User? user = Provider.of<AuthState>(context).user;
+
     return Row(
-      children: [
+      children: user == null ? [] : [
         const Avatar(),
         // info
         Expanded(
@@ -17,9 +22,9 @@ class InfoBar extends StatelessWidget{
             children: [
               Container(
                 margin: const EdgeInsets.only(bottom: 4),
-                child: const Text(
-                  "Nguyen Van A",
-                  style: TextStyle(
+                child: Text(
+                  user.getFullName(),
+                  style: const TextStyle(
                     fontSize: 17,
                     fontWeight: FontWeight.bold,
                     color: Colors.white
@@ -67,5 +72,4 @@ class InfoBar extends StatelessWidget{
       ],
     );
   }
-
 }

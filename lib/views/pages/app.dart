@@ -52,9 +52,6 @@ class App extends StatelessWidget {
         auth.setUser(user);
       }
     })
-    .catchError((err) {
-      setAuthorizeHeader("");
-    })
     .whenComplete(() {
       Future.delayed(const Duration(milliseconds: 5000), () {
         auth.setAuthing(false);

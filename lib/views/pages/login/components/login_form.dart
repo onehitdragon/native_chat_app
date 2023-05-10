@@ -1,9 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:native_chat_app/constant.dart';
+import 'package:native_chat_app/models/user_model.dart';
 import 'package:native_chat_app/service/auth_service.dart';
+import 'package:native_chat_app/service/user_service.dart';
+import 'package:native_chat_app/state/auth_state.dart';
 import 'package:native_chat_app/views/dialog/custom_alert_dialog.dart';
 import 'package:native_chat_app/views/pages/components/standard_text_field.dart';
 import 'package:native_chat_app/views/pages/components/standard_scure_field.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget{
@@ -59,8 +64,14 @@ class LoginFormState extends State<LoginForm>{
                   .then((prefs) {
                     return prefs.setString("token", auth.token);
                   })
-                  .then((value) {
-                    context.go("/");
+                  .then<User>((value) {
+                    setAuthorizeHeader(auth.token);
+                    UserService userService = UserService();
+                    return userService.fetchUser();
+                  })
+                  .then((user) {
+                    AuthState authState = Provider.of<AuthState>(context, listen: false);
+                    authState.setUser(user);
                   });
                 }
               })

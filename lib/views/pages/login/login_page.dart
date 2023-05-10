@@ -11,6 +11,7 @@ class LoginPage extends StatelessWidget{
   
   @override
   Widget build(BuildContext context) {
+    print("reload login...");
     AuthState auth = Provider.of<AuthState>(context);
 
     if(auth.authing){
