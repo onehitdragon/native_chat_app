@@ -8,13 +8,12 @@ import 'package:native_chat_app/views/pages/register/register_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:native_chat_app/constant.dart';
-import 'package:dio/dio.dart';
 
 import '../../models/user_model.dart';
 import '../../service/user_service.dart';
 
 
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   final GoRouter _router = GoRouter(
     routes: [
       GoRoute(
@@ -35,34 +34,35 @@ class App extends StatefulWidget {
   App({super.key});
   
   @override
-  State<StatefulWidget> createState() {
-    return AppState();
-  }
-}
-
-class AppState extends State<App>{
-  bool authing = false;
-
-  AppState(){
-    //api.interceptors.add(LogInterceptor());
-  }
-
-  @override
   Widget build(BuildContext context) {
-    AuthState auth = Provider.of<AuthState>(context);
+    debugPrint("authing...");
+    AuthState auth = Provider.of<AuthState>(context, listen: false);
     
-    Future.delayed(Duration.zero, () async {
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences.getInstance()
+    .then<User?>((prefs) {
       String? token = prefs.getString("token");
-      if(token != null){
-        setAuthorizeHeader(token);
-        UserService userService = UserService();
-        User? user = await userService.fetchUser();
+      if(token == null) return null;
+
+      setAuthorizeHeader(token);
+      UserService userService = UserService();
+      return userService.fetchUser();
+    })
+    .then((user) {
+      if(user != null){
+        auth.setUser(user);
       }
+    })
+    .catchError((err) {
+      setAuthorizeHeader("");
+    })
+    .whenComplete(() {
+      Future.delayed(const Duration(milliseconds: 5000), () {
+        auth.setAuthing(false);
+      });
     });
 
     return MaterialApp.router(
-      routerConfig: widget._router,
+      routerConfig: _router,
       debugShowCheckedModeBanner: false
     );
   }

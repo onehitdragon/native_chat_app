@@ -6,6 +6,7 @@ import 'package:native_chat_app/views/pages/home/components/info_bar.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/main_navigate_bar.dart';
+import '../loading/loading_page.dart';
 
 class HomePage extends StatelessWidget{
   const HomePage({super.key});
@@ -14,7 +15,11 @@ class HomePage extends StatelessWidget{
   Widget build(BuildContext context) {
     AuthState auth = Provider.of<AuthState>(context);
 
-    Future.delayed(Duration.zero, () async {
+    if(auth.authing){
+      return const LoadingPage();
+    }
+
+    Future.delayed(Duration.zero, () {
       if(auth.user == null){
         context.go("/login");
       }

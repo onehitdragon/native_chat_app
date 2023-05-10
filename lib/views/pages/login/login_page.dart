@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:native_chat_app/state/auth_state.dart';
 import 'package:native_chat_app/views/pages/components/link_button.dart';
+import 'package:native_chat_app/views/pages/loading/loading_page.dart';
 import 'package:native_chat_app/views/pages/login/components/login_form.dart';
 import 'package:provider/provider.dart';
 
@@ -10,9 +11,14 @@ class LoginPage extends StatelessWidget{
   
   @override
   Widget build(BuildContext context) {
-    AuthState authState = Provider.of<AuthState>(context);
+    AuthState auth = Provider.of<AuthState>(context);
+
+    if(auth.authing){
+      return const LoadingPage();
+    }
+    
     Future.delayed(Duration.zero, () {
-      if(authState.user != null){
+      if(auth.user != null){
         context.go("/");
       }
     });

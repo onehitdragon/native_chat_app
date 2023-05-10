@@ -28,10 +28,10 @@ class User{
       firstName: json["firstName"],
       lastName: json["lastName"],
       phone: json["phone"],
-      birthDay: json["birthDay"],
+      birthDay: DateTime.parse(json["birthDay"]),
       role: json["role"],
-      createdAt: json["createdAt"],
-      updatedAt: json["updatedAt"]
+      createdAt: DateTime.parse(json["createdAt"]),
+      updatedAt: DateTime.parse(json["updatedAt"])
     );
   }
 }

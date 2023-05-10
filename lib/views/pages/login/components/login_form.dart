@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:native_chat_app/service/auth_service.dart';
 import 'package:native_chat_app/views/dialog/custom_alert_dialog.dart';
 import 'package:native_chat_app/views/pages/components/standard_text_field.dart';
 import 'package:native_chat_app/views/pages/components/standard_scure_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginForm extends StatefulWidget{
   const LoginForm({super.key});
@@ -16,7 +18,6 @@ class LoginForm extends StatefulWidget{
 class LoginFormState extends State<LoginForm>{
   String username = "";
   String password = "";
-  bool isLogining = false;
 
   @override
   Widget build(BuildContext context) {
@@ -43,12 +44,23 @@ class LoginFormState extends State<LoginForm>{
           TextButton(
             onPressed: () {
               AuthService authService = AuthService();
-              authService.fetchLogin(username, password).then((auth) {
+              authService.fetchLogin(username, password)
+              .then((auth) {
                 if(auth == null){
                   showDialog(context: context, builder: (context) {
                     return const CustomAlertDialog(
                       title: "Login fail",
-                      text: "Username or password is wrong!");
+                      text: "Username or password is wrong!"
+                    );
+                  });
+                }
+                else{
+                  SharedPreferences.getInstance()
+                  .then((prefs) {
+                    return prefs.setString("token", auth.token);
+                  })
+                  .then((value) {
+                    context.go("/");
                   });
                 }
               })
@@ -56,7 +68,8 @@ class LoginFormState extends State<LoginForm>{
                 showDialog(context: context, builder: (context) {
                   return const CustomAlertDialog(
                     title: "Service fail",
-                    text: "Maybe server is closed!");
+                    text: "Maybe server is closed!"
+                  );
                 });
               });
             },

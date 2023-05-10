@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:native_chat_app/views/pages/components/link_button.dart';
 import 'package:native_chat_app/views/pages/register/components/register_form.dart';
 
@@ -20,10 +21,13 @@ class RegisterPage extends StatelessWidget{
           padding: const EdgeInsets.only(top: 80, left: 45, right: 45, bottom: 45),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: const [
-              RegisterForm(),
+            children: [
+              const RegisterForm(),
               LinkButton(
-                "I have account already"
+                "I have account already",
+                onPressed: () {
+                  context.go("/login");
+                }
               )
             ]
           ),
