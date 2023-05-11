@@ -25,10 +25,10 @@ class User extends SimpleUser{
       firstName: json["firstName"],
       lastName: json["lastName"],
       phone: json["phone"],
-      birthDay: DateTime.parse(json["birthDay"]),
+      birthDay: DateTime.parse(json["birthDay"]).toLocal(),
       role: json["role"],
-      createdAt: DateTime.parse(json["createdAt"]),
-      updatedAt: DateTime.parse(json["updatedAt"])
+      createdAt: DateTime.parse(json["createdAt"]).toLocal(),
+      updatedAt: DateTime.parse(json["updatedAt"]).toLocal()
     );
   }
 }

@@ -1,4 +1,5 @@
 import 'package:native_chat_app/models/message_model.dart';
+import 'package:native_chat_app/models/participant_model.dart';
 import 'package:native_chat_app/models/simple_user_model.dart';
 import 'package:native_chat_app/models/user_model.dart';
 
@@ -6,7 +7,7 @@ class Conversation{
   String id;
   String title;
   SimpleUser creator;
-  List<SimpleUser> participatedUsers;
+  List<Participant> participatedUsers;
   List<Message> messages;
   DateTime createdAt;
   DateTime updatedAt;
@@ -26,14 +27,18 @@ class Conversation{
       id: json["id"],
       title: json["title"],
       creator: SimpleUser.fromJson(json["Creator"]),
-      participatedUsers: (json["ParticipatedUsers"] as List<dynamic>).map((u) => SimpleUser.fromJson(u)).toList(),
+      participatedUsers: (json["ParticipatedUsers"] as List<dynamic>).map((p) => Participant.fromJson(p)).toList(),
       messages: (json["Messages"] as List<dynamic>).map((m) => Message.fromJson(m)).toList(),
-      createdAt: DateTime.parse(json["createdAt"]),
-      updatedAt: DateTime.parse(json["updatedAt"])
+      createdAt: DateTime.parse(json["createdAt"]).toLocal(),
+      updatedAt: DateTime.parse(json["updatedAt"]).toLocal()
     );
   }
 
-  SimpleUser getPartner(User me){
+  Participant getMe(User me){
+    return participatedUsers.firstWhere((participant) => participant.id == me.id);
+  }
+
+  Participant getPartner(User me){
     return participatedUsers.firstWhere((participant) => participant.id != me.id);
   }
 
@@ -45,7 +50,7 @@ class Conversation{
     return null;
   }
 
-  SimpleUser getSender(Message message){
+  Participant getSender(Message message){
     return participatedUsers.firstWhere((participant) => participant.id == message.senderId);
   }
 }

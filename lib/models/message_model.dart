@@ -28,8 +28,8 @@ class Message{
       content: json["content"],
       type: json["type"] == "text" ? MessageType.text : MessageType.file,
       senderId: json["senderId"],
-      createdAt: DateTime.parse(json["createdAt"]),
-      updatedAt: DateTime.parse(json["updatedAt"])
+      createdAt: DateTime.parse(json["createdAt"]).toLocal(),
+      updatedAt: DateTime.parse(json["updatedAt"]).toLocal()
     );
   }
 }

@@ -22,7 +22,7 @@ class SimpleUser{
       id: json["id"],
       firstName: json["firstName"],
       lastName: json["lastName"],
-      birthDay: DateTime.parse(json["birthDay"]),
+      birthDay: DateTime.parse(json["birthDay"]).toLocal(),
       role: json["role"]
     );
   }

@@ -4,6 +4,7 @@ import 'package:native_chat_app/models/message_model.dart';
 import 'package:native_chat_app/models/simple_user_model.dart';
 import 'package:native_chat_app/models/user_model.dart';
 import 'package:native_chat_app/state/auth_state.dart';
+import 'package:native_chat_app/util/util.dart';
 import 'package:provider/provider.dart';
 
 import 'avatar.dart';
@@ -61,22 +62,27 @@ class ConversationItem extends StatelessWidget{
             Container(
               margin: const EdgeInsets.only(bottom: 4),
               padding: const EdgeInsets.only(right: 10),
-              child: const Text(
-                "9:41 PM",
-                style: TextStyle(
+              child: Text(
+                lastMessage == null ?
+                ""
+                :
+                convertDateTimeToPresentation(lastMessage.createdAt),
+                style: const TextStyle(
                   fontSize: 14,
                   color: Color.fromARGB(100, 255, 255, 255)
                 ),
               ),
             ),
+            conversation.getMe(me).amountMessageNotRead > 0 ?
             Container(
               padding: const EdgeInsets.only(right: 10),
-              child: const Badge(
+              child: Badge(
                 label: Text(
-                  "2"
+                  conversation.getMe(me).amountMessageNotRead.toString()
                 )
               )
-            )
+            ):
+            Container()
           ],
         )
       ],
