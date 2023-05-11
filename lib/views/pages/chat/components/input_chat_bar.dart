@@ -1,4 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:native_chat_app/models/conversation_model.dart';
+import 'package:native_chat_app/models/message_model.dart';
+import 'package:native_chat_app/service/message_service.dart';
+import 'package:native_chat_app/state/home_state.dart';
+import 'package:provider/provider.dart';
 
 class InputChatBar extends StatefulWidget{
   const InputChatBar({super.key});
@@ -12,8 +17,27 @@ class InputChatBar extends StatefulWidget{
 class _InputChatBarState extends State<InputChatBar>{
   final TextEditingController _txtController = TextEditingController(text: "");
 
+  void sendMessage(Conversation current, Function(Message) onComplete){
+    final content = _txtController.text;
+    setState(() {
+      _txtController.text = "";
+    });
+    MessageService messageService = MessageService();
+    messageService.createTextMessage(current.id, content)
+    .then((newMessage) {
+      onComplete(newMessage);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    HomeState homeState = Provider.of<HomeState>(context);
+    Conversation? current = homeState.currentConversation;
+
+    if(current == null){
+      return Container();
+    }
+
     return Container(
       margin: const EdgeInsets.only(left: 20, right: 20, bottom: 10),
       decoration: BoxDecoration(
@@ -61,8 +85,8 @@ class _InputChatBarState extends State<InputChatBar>{
                 visible: _txtController.text != "",
                 child: IconButton(
                   onPressed: () {
-                    setState(() {
-                      _txtController.text = "";
+                    sendMessage(current, (newMessage) {
+                      homeState.addMessageToCurrent(newMessage);
                     });
                   },
                   icon: const Icon(

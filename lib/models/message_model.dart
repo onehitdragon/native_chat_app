@@ -27,6 +27,7 @@ class Message{
       id: json["id"],
       content: json["content"],
       type: json["type"] == "text" ? MessageType.text : MessageType.file,
+      attachmentUrl: json["attachmentUrl"],
       senderId: json["senderId"],
       createdAt: DateTime.parse(json["createdAt"]).toLocal(),
       updatedAt: DateTime.parse(json["updatedAt"]).toLocal()

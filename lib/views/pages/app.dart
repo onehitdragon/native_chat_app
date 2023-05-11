@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:native_chat_app/state/auth_state.dart';
 import 'package:native_chat_app/views/pages/home/home_page.dart';
-//import 'package:native_chat_app/views/pages/chat/chat_page.dart';
+import 'package:native_chat_app/views/pages/chat/chat_page.dart';
 import 'package:native_chat_app/views/pages/login/login_page.dart';
 import 'package:native_chat_app/views/pages/register/register_page.dart';
 import 'package:provider/provider.dart';
@@ -27,6 +27,10 @@ class App extends StatelessWidget {
       GoRoute(
         path: "/",
         builder: (context, state) => const HomePage(),
+      ),
+      GoRoute(
+        path: "/chat",
+        builder: (context, state) => const ChatPage(),
       )
     ]
   );
