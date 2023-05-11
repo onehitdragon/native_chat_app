@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:native_chat_app/service/conversation_service.dart';
 import 'package:native_chat_app/state/auth_state.dart';
+import 'package:native_chat_app/state/home_state.dart';
 import 'package:native_chat_app/views/pages/home/components/chat_area.dart';
 import 'package:native_chat_app/views/pages/home/components/info_bar.dart';
 import 'package:provider/provider.dart';
@@ -19,9 +21,20 @@ class HomePage extends StatelessWidget{
       return const LoadingPage();
     }
 
+    HomeState homeState = Provider.of<HomeState>(context, listen: false);
     Future.delayed(Duration.zero, () {
       if(auth.user == null){
         context.go("/login");
+      }
+      else{
+        ConversationService conversationService = ConversationService();
+        conversationService.fetchConversations()
+        .then((conversations) {
+          homeState.setConversations(conversations);
+        })
+        .catchError((err) {
+          context.go("/login");
+        });
       }
     });
 

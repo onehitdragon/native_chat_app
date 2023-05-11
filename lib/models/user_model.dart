@@ -1,22 +1,19 @@
-class User{
-  String id;
+import 'package:native_chat_app/models/simple_user_model.dart';
+
+class User extends SimpleUser{
   String email;
-  String firstName;
-  String lastName;
-  DateTime birthDay;
   String phone;
-  String role;
   DateTime createdAt;
   DateTime updatedAt;
 
   User({
-    required this.id,
+    required super.id,
+    required super.firstName,
+    required super.lastName,
+    required super.birthDay,
+    required super.role,
     required this.email,
-    required this.firstName,
-    required this.lastName,
-    required this.birthDay,
     required this.phone,
-    required this.role,
     required this.createdAt,
     required this.updatedAt
   });
@@ -33,9 +30,5 @@ class User{
       createdAt: DateTime.parse(json["createdAt"]),
       updatedAt: DateTime.parse(json["updatedAt"])
     );
-  }
-
-  String getFullName(){
-    return "$lastName $firstName";
   }
 }

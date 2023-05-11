@@ -3,7 +3,7 @@ import 'package:native_chat_app/models/auth_model.dart';
 
 class AuthService {
   Future<Auth?> fetchLogin(String email, String password) async{
-    var res = await api.post("/auth/login", data: {
+    final res = await api.post("/auth/login", data: {
       'email': email,
       'password': password
     });

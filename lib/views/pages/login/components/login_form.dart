@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:native_chat_app/constant.dart';
 import 'package:native_chat_app/models/user_model.dart';
 import 'package:native_chat_app/service/auth_service.dart';

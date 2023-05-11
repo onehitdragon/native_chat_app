@@ -53,7 +53,7 @@ class App extends StatelessWidget {
       }
     })
     .whenComplete(() {
-      Future.delayed(const Duration(milliseconds: 5000), () {
+      Future.delayed(const Duration(milliseconds: 1000), () {
         auth.setAuthing(false);
       });
     });
