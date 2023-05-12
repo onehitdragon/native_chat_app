@@ -9,7 +9,11 @@ class ChatAreaHeader extends StatelessWidget{
   
   @override
   Widget build(BuildContext context) {
-    List<Conversation> conversations = Provider.of<HomeState>(context).conversations;
+    List<Conversation>? conversations = Provider.of<HomeState>(context).conversations;
+
+    if(conversations == null){
+      return Container();
+    }
 
     return Row(
       crossAxisAlignment: CrossAxisAlignment.center,

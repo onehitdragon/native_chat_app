@@ -2,8 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:native_chat_app/models/conversation_model.dart';
 import 'package:native_chat_app/models/message_model.dart';
 import 'package:native_chat_app/service/message_service.dart';
+import 'package:native_chat_app/service/socket_service.dart';
+import 'package:native_chat_app/state/auth_state.dart';
 import 'package:native_chat_app/state/home_state.dart';
 import 'package:provider/provider.dart';
+
+import '../../../../models/user_model.dart';
 
 class InputChatBar extends StatefulWidget{
   const InputChatBar({super.key});
@@ -17,7 +21,7 @@ class InputChatBar extends StatefulWidget{
 class _InputChatBarState extends State<InputChatBar>{
   final TextEditingController _txtController = TextEditingController(text: "");
 
-  void sendMessage(Conversation current, Function(Message) onComplete){
+  void sendMessage(User me, Conversation current, Function(Message) onComplete){
     final content = _txtController.text;
     setState(() {
       _txtController.text = "";
@@ -25,6 +29,12 @@ class _InputChatBarState extends State<InputChatBar>{
     MessageService messageService = MessageService();
     messageService.createTextMessage(current.id, content)
     .then((newMessage) {
+      SocketService socketService = SocketService.getInstance();
+      socketService.sendMessage(
+        current.getPartner(me).id,
+        current.id,
+        newMessage
+      );
       onComplete(newMessage);
     });
   }
@@ -33,8 +43,10 @@ class _InputChatBarState extends State<InputChatBar>{
   Widget build(BuildContext context) {
     HomeState homeState = Provider.of<HomeState>(context);
     Conversation? current = homeState.currentConversation;
+    AuthState authState = Provider.of<AuthState>(context);
+    User? me = authState.user;
 
-    if(current == null){
+    if(current == null || me == null){
       return Container();
     }
 
@@ -85,7 +97,7 @@ class _InputChatBarState extends State<InputChatBar>{
                 visible: _txtController.text != "",
                 child: IconButton(
                   onPressed: () {
-                    sendMessage(current, (newMessage) {
+                    sendMessage(me, current, (newMessage) {
                       homeState.addMessageToCurrent(newMessage);
                     });
                   },

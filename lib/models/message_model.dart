@@ -33,4 +33,16 @@ class Message{
       updatedAt: DateTime.parse(json["updatedAt"]).toLocal()
     );
   }
+
+  Map<String, dynamic> toJson(){
+    return {
+        "id": id,
+        "content": content,
+        "type": type.name,
+        "attachmentUrl": attachmentUrl,
+        "createdAt": createdAt.toLocal().toString(),
+        "updatedAt": updatedAt.toLocal().toString(),
+        "senderId": senderId
+    };
+  }
 }

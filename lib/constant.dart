@@ -1,7 +1,9 @@
 import 'package:dio/dio.dart';
 
+const String serverUrl = "http://localhost:12345";
+
 final api = Dio(BaseOptions(
-  baseUrl: "http://localhost:12345/api/v1",
+  baseUrl: "$serverUrl/api/v1",
   contentType: "application/json"
 ));
 
