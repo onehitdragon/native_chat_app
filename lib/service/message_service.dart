@@ -10,4 +10,14 @@ class MessageService{
 
     return Message.fromJson(res.data["content"]["message"]);
   }
+
+  Future<Message> createIconMessage(String conversationId, String iconChatUrl) async {
+    final res = await api.post("/message", data: {
+      "conversationId": conversationId,
+      "content": iconChatUrl,
+      "type": "icon"
+    });
+
+    return Message.fromJson(res.data["content"]["message"]);
+  }
 }

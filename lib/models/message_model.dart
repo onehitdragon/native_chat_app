@@ -1,6 +1,7 @@
 enum MessageType{
   text,
-  file
+  file,
+  icon
 }
 
 class Message{
@@ -26,7 +27,7 @@ class Message{
     return Message(
       id: json["id"],
       content: json["content"],
-      type: json["type"] == "text" ? MessageType.text : MessageType.file,
+      type: json["type"] == "text" ? MessageType.text : json["type"] == "icon" ? MessageType.icon : MessageType.file,
       attachmentUrl: json["attachmentUrl"],
       senderId: json["senderId"],
       createdAt: DateTime.parse(json["createdAt"]).toLocal(),

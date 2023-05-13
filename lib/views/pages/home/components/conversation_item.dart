@@ -50,7 +50,7 @@ class ConversationItem extends StatelessWidget{
                   lastMessage == null || lastMessageSender == null ? 
                   "No message"
                   : 
-                  "${lastMessageSender.id == me.id ? "Me" : lastMessageSender.getFullName()}: ${lastMessage.content}",
+                  "${lastMessageSender.id == me.id ? "Me" : lastMessageSender.getFullName()}: ${lastMessage.type == MessageType.text ? lastMessage.content : lastMessage.type == MessageType.icon ? "Send 1 icon" : "Send 1 file"}",
                   style: const TextStyle(
                     fontSize: 14,
                     color: Colors.white
