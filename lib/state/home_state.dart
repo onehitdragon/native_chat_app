@@ -2,9 +2,12 @@ import 'package:flutter/foundation.dart';
 import 'package:native_chat_app/models/conversation_model.dart';
 import 'package:native_chat_app/models/message_model.dart';
 
+import '../models/chaticon_model.dart';
+
 class HomeState extends ChangeNotifier{
   List<Conversation>? conversations;
   Conversation? currentConversation;
+  List<ChatIcon>? chatIcons;
 
   void setConversations(List<Conversation> conversations){
     this.conversations = conversations;
@@ -35,5 +38,10 @@ class HomeState extends ChangeNotifier{
         }
       }
     }
+  }
+
+  void setChatIcons(List<ChatIcon> chatIcons){
+    this.chatIcons = chatIcons;
+    notifyListeners();
   }
 }

@@ -8,6 +8,7 @@ import 'package:native_chat_app/state/home_state.dart';
 import 'package:provider/provider.dart';
 
 import '../../../../models/user_model.dart';
+import '../../../../state/icon_area_state.dart';
 
 class InputChatBar extends StatefulWidget{
   const InputChatBar({super.key});
@@ -45,6 +46,7 @@ class _InputChatBarState extends State<InputChatBar>{
     Conversation? current = homeState.currentConversation;
     AuthState authState = Provider.of<AuthState>(context);
     User? me = authState.user;
+    IconAreaState iconAreaState = Provider.of<IconAreaState>(context);
 
     if(current == null || me == null){
       return Container();
@@ -108,7 +110,9 @@ class _InputChatBarState extends State<InputChatBar>{
                 )
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () {
+                  iconAreaState.setIsOpen(!iconAreaState.isOpen);
+                },
                 icon: const Icon(
                   Icons.tag_faces_rounded,
                   color: Colors.white

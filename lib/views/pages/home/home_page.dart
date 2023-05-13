@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:native_chat_app/models/user_model.dart';
 import 'package:native_chat_app/service/conversation_service.dart';
+import 'package:native_chat_app/service/icon_service.dart';
 import 'package:native_chat_app/service/socket_service.dart';
 import 'package:native_chat_app/state/auth_state.dart';
 import 'package:native_chat_app/state/home_state.dart';
@@ -30,7 +31,6 @@ class HomePage extends StatelessWidget{
         context.go("/login");
       }
       else{
-        print(homeState.conversations);
         if(homeState.conversations == null){
           ConversationService conversationService = ConversationService();
           conversationService.fetchConversations()
@@ -44,6 +44,12 @@ class HomePage extends StatelessWidget{
           })
           .catchError((err) {
             context.go("/login");
+          });
+
+          IconService iconService = IconService();
+          iconService.fetchIcons()
+          .then((chatIcons) {
+            homeState.setChatIcons(chatIcons);
           });
         }
       }
