@@ -6,6 +6,8 @@ import 'package:native_chat_app/service/icon_service.dart';
 import 'package:native_chat_app/service/socket_service.dart';
 import 'package:native_chat_app/state/auth_state.dart';
 import 'package:native_chat_app/state/home_state.dart';
+import 'package:native_chat_app/state/video_call_state.dart';
+import 'package:native_chat_app/views/dialog/custom_video_call_dialog.dart';
 import 'package:native_chat_app/views/pages/home/components/chat_area.dart';
 import 'package:native_chat_app/views/pages/home/components/info_bar.dart';
 import 'package:provider/provider.dart';
@@ -26,6 +28,8 @@ class HomePage extends StatelessWidget{
     }
 
     HomeState homeState = Provider.of<HomeState>(context, listen: false);
+    VideoCallState videoCallState = Provider.of<VideoCallState>(context, listen: false);
+
     Future.delayed(Duration.zero, () {
       if(me == null){
         context.go("/login");
@@ -40,6 +44,25 @@ class HomePage extends StatelessWidget{
             socketService.connect(me);
             socketService.addHaveMessageListener((conversationId, message) {
               homeState.addMessage(conversationId, message);
+            });
+
+            socketService.addHaveVideoCallListener((callerPeerId, callerUserId) {
+              showDialog(context: context, builder: (context) {
+                return CustomVideoCallDialog(title: "$callerUserId...", text: "calling...");
+              }, barrierDismissible: false);
+
+              videoCallState.initPeer(() {
+                showDialog(context: context, builder: (context) {
+                  return CustomVideoCallDialog(
+                    title: "$callerUserId...",
+                    text: "accepting..."
+                  );
+                }, barrierDismissible: false);
+
+                videoCallState.setRemotePeerId(callerPeerId);
+                socketService.answerVideoCall(videoCallState.peer!.id!, callerUserId);
+                context.go("/videocall");
+              });
             });
           })
           .catchError((err) {

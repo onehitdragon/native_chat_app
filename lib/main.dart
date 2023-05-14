@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:native_chat_app/state/auth_state.dart';
 import 'package:native_chat_app/state/home_state.dart';
 import 'package:native_chat_app/state/icon_area_state.dart';
+import 'package:native_chat_app/state/video_call_state.dart';
 import 'package:native_chat_app/views/pages/app.dart';
 import 'package:provider/provider.dart';
 
@@ -24,6 +25,9 @@ class MainApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => IconAreaState()
+        ),
+        ChangeNotifierProvider(
+          create: (context) => VideoCallState()
         )
       ],
       child: App()

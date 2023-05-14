@@ -10,3 +10,5 @@ final api = Dio(BaseOptions(
 void setAuthorizeHeader(String token){
   api.options.headers = { "Authorization": "Bearer $token" };
 }
+
+const String peerUrl = "http://localhost:9000";

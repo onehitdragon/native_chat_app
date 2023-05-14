@@ -5,6 +5,7 @@ import 'package:native_chat_app/views/pages/home/home_page.dart';
 import 'package:native_chat_app/views/pages/chat/chat_page.dart';
 import 'package:native_chat_app/views/pages/login/login_page.dart';
 import 'package:native_chat_app/views/pages/register/register_page.dart';
+import 'package:native_chat_app/views/pages/videocall/videocall_page.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:native_chat_app/constant.dart';
@@ -31,6 +32,10 @@ class App extends StatelessWidget {
       GoRoute(
         path: "/chat",
         builder: (context, state) => const ChatPage(),
+      ),
+      GoRoute(
+        path: "/videocall",
+        builder: (context, state) => const VideoCallPage(),
       )
     ]
   );

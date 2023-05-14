@@ -32,4 +32,34 @@ class SocketService{
   void sendMessage(String receiveUserId, String conversationId, Message message){
     socket.emit("send message", [receiveUserId, conversationId, message.toJson()]);
   }
+
+  void callVideo(String callerPeerId, String receiveUserId){
+    socket.emit("call video", [callerPeerId, receiveUserId]);
+  }
+
+  void addHaveVideoCallListener(Function(String callerPeerId, String callerUserId) onHaveVideoCall){
+    socket.on("have video call", (data) {
+      onHaveVideoCall(data[0], data[1]);
+    });
+  }
+
+  void answerVideoCall(String answererPeerId, String receiveUserId){
+    socket.emit("answer video call", [answererPeerId, receiveUserId]);
+  }
+
+  void addAcceptVideoCallListener(Function(String answererPeerId, String answererUserId) onAcceptVideoCall){
+    socket.on("accept video call", (data) {
+      onAcceptVideoCall(data[0], data[1]);
+    });
+  }
+
+  void addClientOfflineListener(Function() onClientOffline){
+    socket.on("client offline", (data) {
+      onClientOffline();
+    });
+  }
+
+  void removeClientOfflineListener(){
+    socket.off("client offline");
+  }
 }
