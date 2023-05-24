@@ -22,7 +22,7 @@ class RegisterPage extends StatelessWidget{
           child: Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const RegisterForm(),
+              RegisterForm(),
               LinkButton(
                 "I have account already",
                 onPressed: () {
